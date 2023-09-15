@@ -1,4 +1,6 @@
+
 const { convertToAbsolutePath, readExtFile, readMarkdownFile } = require('../data.js');
+const fsAsync = require('fs/promises');
 
 const rutas = [
     '../DEV009-social-network/README.md',
@@ -41,9 +43,11 @@ describe('readExtFile', ()=>{
 })
 
 describe('readMarkdownFile', ()=>{
-  it('should call to function readFile', () =>{
-    const readFile = jest.fn();
-    readExtFile('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file1.text')
-    expect(readFile).toHaveBeenCalled();
+  
+  it('should call to function readFile from node: fs/promises', () =>{
+    jest.mock('fs/promises');
+    const spyFn =  jest.spyOn(fsAsync, 'readFile');
+    readMarkdownFile('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file1.text');
+    expect(spyFn).toHaveBeenCalled();
   })
 })
