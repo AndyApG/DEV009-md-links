@@ -6,10 +6,13 @@ const {convertToAbsolutePath, readExtFile, readMarkdownFile }= require('./data')
 const mdLinks = (pathReceived) => {
 return new Promise (function(resolve,reject){
  convertToAbsolutePath(pathReceived).then((absolutePath)=>{
-  filePath = absolutePath;
-  resolve (readExtFile(absolutePath).then(()=>{
-    readMarkdownFile (filePath);
-  }));
+  absFilePath = absolutePath;
+  readExtFile(absolutePath).then((result)=>{
+    if(result){
+      readMarkdownFile (absFilePath ).then(data => resolve(data));
+
+    }
+  }).catch((error) => reject(error));
  }).catch((error) => reject(error));
 });
 }

@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const fsAsync = require('fs/promises');
+
 
 
 function convertToAbsolutePath(pathReceived){
@@ -20,19 +22,17 @@ function readExtFile(pathReceived){
     const fileName = path.basename(pathReceived);
  return new Promise((resolve,reject) =>{
     if (validExt.includes(path.extname(fileName))){
-        resolve();
+        resolve(true);
     }else reject ('El archivo no es md');
  })
     
 }
 
 function readMarkdownFile (pathFile){
-   fs.readFile(pathFile,'utf8',(err,data)=>{
-        if(err) throw err;
-        console.log(data);
-    })
+   return new Promise((resolve, reject) => {
+    fsAsync.readFile(pathFile,'utf8').then(data => resolve(data)).catch(err => {reject(err)});
+   })
 }
-
 
 
 module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile }
