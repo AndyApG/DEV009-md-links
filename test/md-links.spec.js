@@ -7,6 +7,12 @@ describe('mdLinks', () => {
       expect(error).toBe('No existe la ruta');
     })
   });
+  it('should reject promise if file does not md', () => {
+    return mdLinks('./test_files/file2.txt').catch((error)=>{
+      expect(error).toBe('El archivo no es md');
+    })
+  });
+  
   /*
   it('debería resolver un arreglo con 3 links para un archivo .md con 3 links', () => {
     return mdLinks('miArchivo.md').then((result) => {
