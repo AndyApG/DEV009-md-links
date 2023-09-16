@@ -1,6 +1,7 @@
 
 const { convertToAbsolutePath, readExtFile, readMarkdownFile } = require('../data.js');
 const fsAsync = require('fs/promises');
+const path = require('path');
 
 const rutas = [
     '../DEV009-social-network/README.md',
@@ -22,6 +23,12 @@ describe('convertToAbsolutePath', () => {
           expect(result).toBe('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/README.md');
         })
       });
+    it('should call to function resolve from path', () =>{
+      jest.mock('path');
+      const mockFn =  jest.spyOn(path, 'resolve');
+      convertToAbsolutePath('README.md');
+      expect(mockFn).toHaveBeenCalled();
+    })
 
 })
 
