@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
+let iterator = require('markdown-it-for-inline');
+const Token = require('markdown-it/lib/token');
+let md = require('markdown-it')()
+            .use(iterator, 'foo_replace', 'text', function (tokens, idx) {
+              tokens[idx].content = tokens[idx].content.replace(/foo/g, 'bar');
+            });
 
 
 
@@ -34,5 +40,9 @@ function readMarkdownFile (pathFile){
    })
 }
 
+function getLinks(fileCont){
+    const htmlFile = md.render(fileCont);
+   
+}
 
-module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile }
+module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile, getLinks }
