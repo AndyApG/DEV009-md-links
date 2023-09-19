@@ -10,7 +10,7 @@ return new Promise (function(resolve,reject){
   readExtFile(absolutePath)
   .then((result)=>{
     if(result){
-      readMarkdownFile (absFilePath )
+      readMarkdownFile (absFilePath)
       .then(data => resolve(getLinks(data,absolutePath)));
     }
   }).catch((error) => reject(error));

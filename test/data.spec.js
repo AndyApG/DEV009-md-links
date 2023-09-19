@@ -9,8 +9,7 @@ const rutas = [
     '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/docs/01-milestone.md',
     './/docs/02-milestone.md',
   
-  ]
-  
+  ];
 
 describe('convertToAbsolutePath', () => {
     it('should reject promise if path does not exist', () => {
@@ -58,3 +57,4 @@ describe('readMarkdownFile', ()=>{
     expect(spyFn).toHaveBeenCalled();
   })
 })
+
