@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
+const cheerio = require('cheerio');
 let iterator = require('markdown-it-for-inline');
 let md = require('markdown-it')()
             .use(iterator, 'foo_replace', 'text', function (tokens, idx) {
@@ -39,9 +40,20 @@ function readMarkdownFile (pathFile){
    })
 }
 
-function getLinks(fileCont){
-    const htmlFile = md.render(fileCont);
-   
+function getLinks(fileCont,pathFile){
+    const arrayLinks = [];
+    const htmlFile =md.render(fileCont);
+    const doc = cheerio.load(`<html>${htmlFile}</html>`);
+    const listItems = doc('html').find('a');
+    listItems.map((i, el)=>{
+        arrayLinks.push({
+            number : i,
+            href : el.attribs.href,
+            text: el.children[0].data,
+            file: pathFile,
+        });
+    });
+    return arrayLinks;
 }
 
 module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile, getLinks }
