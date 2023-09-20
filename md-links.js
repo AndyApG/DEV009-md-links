@@ -12,8 +12,10 @@ return new Promise (function(resolve,reject){
     if(result){
       readMarkdownFile (absFilePath)
       .then(data => resolve(getLinks(data,absolutePath)));
+    }else{
+      reject('El archivo no es md');
     }
-  }).catch((error) => reject(error));
+  })
  }).catch((error) => reject(error));
 });
 }
