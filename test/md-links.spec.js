@@ -1,5 +1,5 @@
 const mdLinks = require('../md-links.js');
-
+const {readMarkdownFile}= require('../data.js');
 
 describe('mdLinks', () => {
   it('should reject promise if path does not exist', () => {
@@ -13,12 +13,14 @@ describe('mdLinks', () => {
     })
   });
   
-  it('debería resolver un arreglo vacio para un archivo .md sin links', () => {
-    return mdLinks('./test_files/file1.text').then((result) => {
-      expect(result.length).toBe(0);
+  it('debería resolver un arreglo de longitud 3 para un archivo .md sin links', () => {
+    return mdLinks('./test_files/file3.md').then((result) => {
+      expect(result.length).toBe(3);
+      
     });
+   
   });
-  
+    
 });
 
 

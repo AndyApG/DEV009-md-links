@@ -39,9 +39,9 @@ describe('readExtFile', ()=>{
 
   });
 
-  it('shoud return "El archivo no es md" for files whit extention not valid',()=>{
-    return readExtFile('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/index.js').catch((err)=>{
-      expect(err).toBe('El archivo no es md');
+  it('shoud return false for files whit extention not valid',()=>{
+    return readExtFile('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/index.js').then((err)=>{
+      expect(err).toBe(false);
     })
 
   });

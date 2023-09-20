@@ -29,7 +29,7 @@ function readExtFile(pathReceived){
  return new Promise((resolve,reject) =>{
     if (validExt.includes(path.extname(fileName))){
         resolve(true);
-    }else reject ('El archivo no es md');
+    }else resolve (false);
  })
     
 }
@@ -47,13 +47,12 @@ function getLinks(fileCont,pathFile){
     const listItems = doc('html').find('a');
     listItems.map((i, el)=>{
         arrayLinks.push({
-            number : i,
             href : el.attribs.href,
             text: el.children[0].data,
             file: pathFile,
         });
     });
-    return arrayLinks;
+    return arrayLinks.filter(i => i.href.includes('http'));
 }
 
 module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile, getLinks }
