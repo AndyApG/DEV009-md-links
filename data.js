@@ -1,8 +1,11 @@
+const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
 const cheerio = require('cheerio');
 let iterator = require('markdown-it-for-inline');
+const { rejects } = require('assert');
+const { error } = require('console');
 let md = require('markdown-it')()
             .use(iterator, 'foo_replace', 'text', function (tokens, idx) {
               tokens[idx].content = tokens[idx].content.replace(/foo/g, 'bar');
@@ -47,6 +50,7 @@ function getLinks(fileCont,pathFile){
     const listItems = doc('html').find('a');
     listItems.map((i, el)=>{
         arrayLinks.push({
+            num :i,
             href : el.attribs.href,
             text: el.children[0].data,
             file: pathFile,
@@ -55,4 +59,24 @@ function getLinks(fileCont,pathFile){
     return arrayLinks.filter(i => i.href.includes('http'));
 }
 
-module.exports = { convertToAbsolutePath, readExtFile, readMarkdownFile, getLinks }
+function validateLink(link){
+    return new Promise((resolve,reject)=>{
+        axios.get(link)
+            .then(response => resolve(response.status))
+            .catch(error => reject(error.response.status))
+    });
+}
+
+function addStatusAndOk (link){
+    
+   
+    return validateLink(link);
+}
+module.exports = { 
+    convertToAbsolutePath, 
+    readExtFile, 
+    readMarkdownFile, 
+    getLinks, 
+    validateLink,
+    addStatusAndOk
+}
