@@ -38,7 +38,7 @@ function readMarkdownFile (pathFile){
 }
 
 function getLinks(fileCont,pathFile){
-    const arrayLinks = [];
+    const arrayLinks = new Array();
     const htmlFile =md.render(fileCont);
     const doc = cheerio.load(`<html>${htmlFile}</html>`);
     const listItems = doc('html').find('a');

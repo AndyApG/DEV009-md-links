@@ -1,5 +1,6 @@
 
-const { convertToAbsolutePath, readExtFile, readMarkdownFile } = require('../data.js');
+const { convertToAbsolutePath, readExtFile, readMarkdownFile, getLinks, 
+  validateLink, } = require('../data.js');
 const fsAsync = require('fs/promises');
 const path = require('path');
 
@@ -49,12 +50,30 @@ describe('readExtFile', ()=>{
 })
 
 describe('readMarkdownFile', ()=>{
-  
   it('should call to function readFile from node: fs/promises', () =>{
     jest.mock('fs/promises');
     const spyFn =  jest.spyOn(fsAsync, 'readFile');
     readMarkdownFile('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file1.text');
     expect(spyFn).toHaveBeenCalled();
+  })
+})
+
+describe('getLinks',()=>{
+  it('should return a empty array if the file does not contains links  ',()=>{
+    expect(getLinks('/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file1.text')).toStrictEqual([]);
+  })
+})
+
+describe('validateLink',()=>{
+  it('should return 200 if the link exist',()=>{
+    return validateLink('https://www.google.com/').then(result => {
+      expect(result).toBe(200);
+    })
+  })
+  it('should return 404 if the link exist',()=>{
+    return validateLink('https://www.google.com/').catch(err => {
+      expect(err).toBe(404);
+    })
   })
 })
 

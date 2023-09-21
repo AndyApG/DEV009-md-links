@@ -23,7 +23,6 @@ return new Promise (function(resolve,reject){
           })
           resolve(arrayLinks);
         }else{
-
           const newArray = arrayLinks.map(element => {
             return new Promise ((resolve)=>{
               delete element.num;
@@ -38,16 +37,12 @@ return new Promise (function(resolve,reject){
                 element.ok = 'FAIL';
                 resolve(element);
               });
-              
             })
-           
           });
           Promise.all(newArray).then(result =>{
             resolve(result);
           })
-          //resolve(newArray);
         }
-        
       })
     }else{
       reject('El archivo no es md');
