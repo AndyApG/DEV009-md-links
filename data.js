@@ -3,11 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
 const cheerio = require('cheerio');
-let iterator = require('markdown-it-for-inline');
-let md = require('markdown-it')()
-            .use(iterator, 'foo_replace', 'text', function (tokens, idx) {
-              tokens[idx].content = tokens[idx].content.replace(/foo/g, 'bar');
-            });
+let md = require('markdown-it')();
 
 
 
@@ -27,7 +23,7 @@ function readExtFile(pathReceived){
         '.mdtxt', '.mdtext', '.markdown', '.text'
     ]
     const fileName = path.basename(pathReceived);
- return new Promise((resolve,reject) =>{
+ return new Promise((resolve) =>{
     if (validExt.includes(path.extname(fileName))){
         resolve(true);
     }else resolve (false);
@@ -36,7 +32,7 @@ function readExtFile(pathReceived){
 }
 
 function readMarkdownFile (pathFile){
-   return new Promise((resolve, reject) => {
+   return new Promise((resolve) => {
     fsAsync.readFile(pathFile,'utf8').then(data => resolve(data)).catch(err => {reject(err)});
    })
 }

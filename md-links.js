@@ -23,20 +23,29 @@ return new Promise (function(resolve,reject){
           })
           resolve(arrayLinks);
         }else{
-          arrayLinks.forEach(element => {
-            delete element.num;
-            validateLink(element.href)
-            .then((res) => {
-              element.status = res;
-              element.ok = 'OK';
-              console.log(element);
+
+          const newArray = arrayLinks.map(element => {
+            return new Promise ((resolve)=>{
+              delete element.num;
+              validateLink(element.href)
+              .then((res) => {
+                element.status = res;
+                element.ok = 'OK';
+                resolve(element);
+              })
+              .catch((err) =>{
+                element.status = err;
+                element.ok = 'FAIL';
+                resolve(element);
+              });
+              
             })
-            .catch((err) =>{
-              element.status = err;
-              element.ok = 'FAIL';
-              console.log(element);
-            });
+           
           });
+          Promise.all(newArray).then(result =>{
+            resolve(result);
+          })
+          //resolve(newArray);
         }
         
       })
