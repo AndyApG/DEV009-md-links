@@ -1,6 +1,6 @@
 const mdLinks = require('./md-links');
 
-mdLinks('README.md').then((result)=>{
+mdLinks('./test_files/file3.md',true).then((result)=>{
   console.log(result)
 }).catch((error)=>{
   console.log(error);
