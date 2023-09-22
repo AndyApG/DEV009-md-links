@@ -44,7 +44,7 @@ function getLinks(fileCont,pathFile){
     const listItems = doc('html').find('a');
     listItems.map((i, el)=>{
         arrayLinks.push({
-            num :i,
+            id :i,
             href : el.attribs.href,
             text: el.children[0].data,
             file: pathFile,
@@ -60,11 +60,9 @@ function validateLink(link){
     axios.get(link)
     .then(response => {
         resolve(response.status);
-        return;
     })
     .catch(error => {
        reject(error.response.status);
-       return;
     });
 })}
 module.exports = { 
