@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
 const cheerio = require('cheerio');
-const { promises } = require('dns');
 let md = require('markdown-it')();
 
 
@@ -92,6 +91,16 @@ function readDirectory (dir){
     })
     return promise; 
  }
+
+ function verifyIsAnDirectory(dir) {
+    return new Promise((resolve,reject) =>{
+        if (fs.statSync(`${dir}`).isFile){
+            resolve(true)
+        }
+        reject(false);
+    });
+ }
+    
 module.exports = { 
     convertToAbsolutePath, 
     readExtFile, 
@@ -99,4 +108,5 @@ module.exports = {
     getLinks, 
     validateLink,
     readDirectory,
+    verifyIsAnDirectory,
 }
