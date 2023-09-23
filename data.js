@@ -66,6 +66,7 @@ function validateLink(link){
        reject(error.response.status);
     });
 })}
+
 function readDirectory (dir){
     const dirs = fs.readdirSync(dir,{encoding:'utf8',withFileTypes:true,recursive:false});
     let directories = Array();
@@ -82,16 +83,14 @@ function readDirectory (dir){
                 noValid.push(pathFromDir);
             }
             let result = {
-                pathMd : paths,
-                dir : directories,
-                noMd :  noValid,
+              pathMd : paths,
+              dir : directories,
+              noMd :  noValid,
             }
             return result;
         }).then(result => result);
     })
-
-    return promise;
-    
+    return promise; 
  }
 module.exports = { 
     convertToAbsolutePath, 
