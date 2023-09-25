@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const fsAsync = require('fs/promises');
 const cheerio = require('cheerio');
-const { promises } = require('dns');
 let md = require('markdown-it')();
 
 
@@ -67,31 +66,31 @@ function validateLink(link){
     });
 })}
 
+let paths = Array();
 function readDirectory (dir){
-    const dirs = fs.readdirSync(dir,{encoding:'utf8',withFileTypes:true,recursive:false});
-    let directories = Array();
-    let paths = Array();
-    let noValid = Array();
+    const dirs = fs.readdirSync(dir,{encoding:'utf8',withFileTypes:true});    
     dirs.forEach( dirent =>{
         const pathFromDir = path.join(dirent.path,dirent.name);
         promise = readExtFile(pathFromDir).then(res =>{
             if(res){
                paths.push(pathFromDir);
             }else if(dirent.isDirectory()){
-               directories.push(pathFromDir);
-            } else{
-                noValid.push(pathFromDir);
-            }
-            let result = {
-              pathMd : paths,
-              dir : directories,
-              noMd :  noValid,
-            }
-            return result;
+               readDirectory(pathFromDir);
+            } 
+            return paths;
         }).then(result => result);
     })
     return promise; 
  }
+
+ function verifyIsAnDirectory(dir) {
+    return new Promise((resolve) =>{
+        if (fs.statSync(dir).isDirectory()){
+            resolve(true);
+        }else resolve(false);
+    });
+ }
+    
 module.exports = { 
     convertToAbsolutePath, 
     readExtFile, 
@@ -99,4 +98,5 @@ module.exports = {
     getLinks, 
     validateLink,
     readDirectory,
+    verifyIsAnDirectory,
 }
