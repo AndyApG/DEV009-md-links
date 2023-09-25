@@ -117,20 +117,17 @@ describe('validateLink',()=>{
   })
   it('should return 404 if the link does not exist',()=>{
     axios.get.mockRejectedValue({response:{status:404}});
-    return validateLink('https://www.google.com/fake/').catch(err => {
-      expect(err).toBe(404);
-    })
+    return validateLink('https://www.google.com/fake/')
+    .catch(err => {expect(err).toBe(404)});
   })
 })
 
 describe('readDirectory',() =>{
   it('should return an object with the paths of files md, no md and directories in to directory',() =>{
     return(readDirectory('./test_files')).then(result => {
-      expect(result).toStrictEqual({
-          pathMd: [ 'test_files/file1.text', 'test_files/file3.md' ],
-          dir: [ 'test_files/dir1' ],
-          noMd: [ 'test_files/file2.txt' ]
-        })
+      expect(result).toStrictEqual(["test_files/file1.text",
+       "test_files/file3.md", 
+       "test_files/dir1/file4.md"])
     })
   })
 })
