@@ -22,8 +22,8 @@ describe('mdLinks', () => {
       expect(result.length).toBe(3);
     });
   });
-  it('debería resolver un arreglo de longitud 3 para un archivo .md con 3 links', () => {
-    return mdLinks('./test_files/file3.md',true).then((result) => {
+  it('debería resolver un arreglo de longitud 3 para una carpeta con un archivo .md con 3 links', () => {
+    return mdLinks('./test_files',true).then((result) => {
       expect(result.length).toBe(3);
     });
   });
