@@ -29,5 +29,8 @@
     "test": "jest --coverage"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bin": {
+    "md-links": "./cli.js"
+  }
 }
