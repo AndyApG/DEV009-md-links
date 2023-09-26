@@ -18,7 +18,7 @@ const mdLinks = (pathOrDir, validate = false) => {
               resolve(mdLinks(directoryPath,validate));
               })
             })
-            Promise.all(resultFiles).then(result => resolve(result));
+            Promise.all(resultFiles).then(result => resolve(result.flat()));
           })
         }
         else{
@@ -31,13 +31,13 @@ const mdLinks = (pathOrDir, validate = false) => {
                     arrayLinks.forEach(element =>{
                       delete element.status;
                       delete element.ok;
-                      delete element.num;
+                      delete element.id;
                    })
                     resolve(arrayLinks);
               }else{
                 const newArray = arrayLinks.map(element => {
                       return new Promise ((resolve)=>{
-                        delete element.num;
+                        delete element.id;
                         validateLink(element.href)
                         .then((res) => {
                           element.status = res;
