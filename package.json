@@ -31,7 +31,7 @@
   "author": "Andrea Aparicio",
   "license": "ISC",
   "bin": {
-    "md-links": "cli.js"
+    "md-links": "./cli.js"
   },
   "devDependencies": {
     "eslint": "^8.50.0",
@@ -40,6 +40,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndyApG/DEV009-md-links"
+    "url": "git+https://github.com/AndyApG/DEV009-md-links.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

@@ -8,7 +8,7 @@ const options = process.argv.slice(3);
 if (options.includes('--validate')) {
   mdLinks(path, true).then((result) => {
     if (options.includes('--stats')) {
-      const set = new Set(result);
+      const set = new Set(result.map((results) => results.href));
       const broken = result.filter((item) => item.ok === 'FAIL').length;
       console.log(' Total', result.length, '\n', 'Unique:', set.size, '\n', 'Broken:', broken);
     }
@@ -18,7 +18,7 @@ if (options.includes('--validate')) {
   });
 } else if (options.includes('--stats')) {
   mdLinks(path).then((result) => {
-    const set = new Set(result);
+    const set = new Set(result.map((results) => results.href));
     console.log(' Total', result.length, '\n', 'Unique:', set.size);
   }).catch((error) => {
     console.log(error);
