@@ -18,10 +18,9 @@
     "jest": "^29.7.0",
     "markdown-it": "^13.0.1"
   },
-  "description": "## Índice",
+  "description": "Libreria md-links",
   "main": "cli.js",
   "directories": {
-    "doc": "test_files",
     "test": "test"
   },
   "scripts": {
@@ -29,14 +28,18 @@
     "pretest": "npm run eslint",
     "test": "jest --coverage"
   },
-  "author": "",
+  "author": "Andrea Aparicio",
   "license": "ISC",
   "bin": {
-    "md-links": "./cli.js"
+    "md-links": "cli.js"
   },
   "devDependencies": {
     "eslint": "^8.50.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndyApG/DEV009-md-links"
   }
 }
