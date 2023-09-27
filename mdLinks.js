@@ -1,8 +1,6 @@
 
-const {convertToAbsolutePath, 
-  readExtFile, readMarkdownFile, 
-  getLinks, validateLink,
-  readDirectory, verifyIsAnDirectory}= require('./data');
+const {convertToAbsolutePath,readExtFile, readMarkdownFile, 
+  getLinks, validateLink,readDirectory, verifyIsAnDirectory }= require('./data');
 
 
 //Crear la funcion mdLinks
@@ -15,7 +13,7 @@ const mdLinks = (pathOrDir, validate = false) => {
           readDirectory(absolutePath).then(result =>{
             const resultFiles = result.map(directoryPath => {
               return new Promise (function(resolve){
-              resolve(mdLinks(directoryPath,validate));
+                resolve(mdLinks(directoryPath,validate));
               })
             })
             Promise.all(resultFiles).then(result => resolve(result.flat()));
@@ -24,7 +22,7 @@ const mdLinks = (pathOrDir, validate = false) => {
         else{
           readExtFile(absolutePath).then((result)=>{
             if(result){
-                readMarkdownFile (absFilePath)
+              readMarkdownFile (absFilePath)
                 .then(data => getLinks(data,absolutePath))
                 .then(arrayLinks => {
                   if(validate === false || validate === undefined){
@@ -32,32 +30,32 @@ const mdLinks = (pathOrDir, validate = false) => {
                       delete element.status;
                       delete element.ok;
                       delete element.id;
-                   })
+                    })
                     resolve(arrayLinks);
-              }else{
-                const newArray = arrayLinks.map(element => {
+                  }else{
+                    const newArray = arrayLinks.map(element => {
                       return new Promise ((resolve)=>{
                         delete element.id;
                         validateLink(element.href)
-                        .then((res) => {
-                          element.status = res;
-                          element.ok = 'OK';
-                          resolve(element);
-                        })
-                        .catch((err) =>{
-                          element.status = err;
-                          element.ok = 'FAIL';
-                          resolve(element);
-                        });
+                          .then((res) => {
+                            element.status = res;
+                            element.ok = 'OK';
+                            resolve(element);
+                          })
+                          .catch((err) =>{
+                            element.status = err;
+                            element.ok = 'FAIL';
+                            resolve(element);
+                          });
                       })
                     });
                     Promise.all(newArray).then(result =>{
-                     resolve(result);
+                      resolve(result);
                     })
                   }
                 })
             }else{
-                reject('El archivo no es md');
+              reject('El archivo no es md');
             }
           })
         }

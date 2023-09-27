@@ -16,21 +16,27 @@
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
     "jest": "^29.7.0",
-    "markdown-it": "^13.0.1",
-    "markdown-it-for-inline": "^0.1.1"
+    "markdown-it": "^13.0.1"
   },
   "description": "## Índice",
-  "main": "index.js",
+  "main": "cli.js",
   "directories": {
-    "doc": "docs",
+    "doc": "test_files",
     "test": "test"
   },
   "scripts": {
+    "eslint": "eslint --ext .js test/",
+    "pretest": "npm run eslint",
     "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
   "bin": {
     "md-links": "./cli.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1"
   }
 }
