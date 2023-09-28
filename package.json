@@ -19,11 +19,9 @@
     "markdown-it": "^13.0.1"
   },
   "description": "Esta libreria permite buscar los links en archivos markdown, en caso de proporcionar un directorio busca los links recursivamente",
-  "main": "cli.js",
+  "main": "mdLinks.js",
   "directories": {
-    "test": "test",
-    "bin": "cli.js",
-    "doc": "REDME.md"
+    "test": "test"
   },
   "scripts": {
     "eslint": "eslint --ext .js test/",
@@ -43,9 +41,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AndyApG/DEV009-md-links.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "bugs": {
     "url": "https://github.com/AndyApG/DEV009-md-links/issues"
