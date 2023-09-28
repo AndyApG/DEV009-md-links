@@ -10,7 +10,7 @@ function convertToAbsolutePath(pathReceived) {
     if (fs.existsSync(pathReceived)) {
       resolve(path.resolve(pathReceived));
     }
-    reject('No existe la ruta');
+    reject('Path does no exist.');
   });
 }
 

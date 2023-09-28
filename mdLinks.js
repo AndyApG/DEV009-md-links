@@ -49,7 +49,7 @@ const mdLinks = (pathOrDir, validate = false) => new Promise((resolve, reject) =
                 }
               });
           } else {
-            reject('El archivo no es md');
+            reject('File is not have an valid extention.');
           }
         });
       }
