@@ -77,11 +77,69 @@ md-links 'test_files/'
 ```sh
 md-links 'test_files/' --validate
 ```
+```js
+*** LINKS FOUND AND VALIDATED***
+ [
+  {
+    href: 'https://www.google.com/',
+    text: 'Google',
+    file: '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file3.md',
+    status: 200,
+    ok: 'OK',
+    line: 1
+  },
+  {
+    href: 'https://www.microsoft.com/es-mx/',
+    text: 'Microsoft',
+    file: '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file3.md',
+    status: 200,
+    ok: 'OK',
+    line: 2
+  },
+  {
+    href: 'https://www.microsoft.com/es-mx/isfake',
+    text: 'Fake',
+    file: '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/file3.md',
+    status: 404,
+    ok: 'FAIL',
+    line: 3
+  },
+  {
+    href: 'https://docs.github.com/es/packages/working-with-a-github-packages-registry/working-with-the-npm-registry',
+    text: 'Consulta este link',
+    file: '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/dir1/file4.md',
+    status: 200,
+    ok: 'OK',
+    line: 1
+  },
+  {
+    href: 'https://www.microsoft.com/es-mx/isfake',
+    text: 'Fake',
+    file: '/home/andrea/Documentos/Bootcamp Laboratoria/DEV009-md-links/test_files/dir1/file4.md',
+    status: 404,
+    ok: 'FAIL',
+    line: 2
+  }
+]
+```
 ```sh
 md-links 'test_files/' --stats
 ```
+```js
+*** STATISTICS ***
+ 
+ * Total: 5 
+ * Unique: 4
+```
 ```sh
 md-links 'test_files/' --validat --stats
+```
+```js
+*** VALIDATED STATISTICS ***
+ 
+ * Total: 5 
+ * Unique: 4 
+ * Broken: 2
 ```
 
 
