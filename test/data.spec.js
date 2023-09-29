@@ -74,6 +74,7 @@ describe('getLinks', () => {
         file: '/ruta/ejemplo.md',
         status: 0,
         ok: '',
+        line: 1,
       },
       {
         id: 1,
@@ -82,6 +83,7 @@ describe('getLinks', () => {
         file: '/ruta/ejemplo.md',
         status: 0,
         ok: '',
+        line: 2,
       },
       {
         id: 2,
@@ -90,6 +92,7 @@ describe('getLinks', () => {
         file: '/ruta/ejemplo.md',
         status: 0,
         ok: '',
+        line: 3,
       }],
     );
   });
