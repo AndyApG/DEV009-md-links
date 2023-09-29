@@ -17,7 +17,7 @@ const dir = process.cwd();
 
 describe('convertToAbsolutePath', () => {
   it('should reject promise if path does not exist', () => convertToAbsolutePath('./this/path/does/noexist.md').catch((err) => {
-    expect(err).toBe('Path does no exist.');
+    expect(err.message).toBe('Path does no exist.');
   }));
   it('should return an absolut path if the argument is a file path', () => convertToAbsolutePath('./test_files/file1.text').then((result) => {
     expect(result).toBe(`${dir}/test_files/file1.text`);
