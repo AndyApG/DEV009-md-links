@@ -68,18 +68,16 @@ function readDirectory(dir) {
   const dirs = fs.readdirSync(dir, { encoding: 'utf8', withFileTypes: true });
   dirs.forEach((dirent) => {
     const pathFromDir = path.join(dirent.path, dirent.name);
-    readExtFile(pathFromDir).then((res) => {
+    promise = readExtFile(pathFromDir).then((res) => {
       if (res) {
         paths.push(pathFromDir);
       } else if (dirent.isDirectory()) {
         readDirectory(pathFromDir);
       }
       return paths;
-    });
+    }).then((result) => result);
   });
-  return new Promise((resolve) => {
-    resolve(paths);
-  });
+  return promise;
 }
 
 function verifyIsAnDirectory(dir) {
