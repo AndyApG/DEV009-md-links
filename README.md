@@ -2,31 +2,30 @@
 
 ## Descripción
 
-**md-links** es una libreria de `Node.js`, que obtiene y analiza los links contenidos en un archvo `Markdown`, para encontrar los links rotos o inválidos, es una herramienta útil de mantener accecible la información que se quiere compartir.
+**md-links** es una librería de `Node.js`, que obtiene y analiza los links contenidos en un archvo `Markdown`, para encontrar los links rotos o inválidos, es una herramienta útil para mantener accecible la información que se quiere compartir.
 
 
 ## Instalación
-Para la instalación es necesrio tener la última version de Node.js y basta con ejecutar el siguiente comando en la terminal:
+Para la instalación es necesario tener la última version de Node.js y basta con ejecutar el siguiente comando en la terminal:
 
 ``` sh
 npm install AndyApG/DEV009-md-links
 ```
 
 ## Uso
-Esta libreia se puede usar directamente en la linea de comandos mediante la siguiente instruccion:
+Este paquete se puede usar directamente en la linea de comandos mediante la siguiente instruccion:
 ```sh
 md-links *ruta **options
 ```
-El parametro **\*ruta** puede ser la ruta absoluta o relativa con respecto al directorio actual, de un archivo markdown o directorio que contenga un archivo o incluso más directorios con archivos con extencion valida ('.md', '.mkd', '.mdwn', '.mdown','.mdtxt', '.mdtext', '.markdown', '.text',). En el parametro 
-**\*\*options** las opciones disponibles son:
-  ```--validate``` y ```--stats```, estas se pueden omitir o combinar para obtener distintos resultados (ver ejemplos).
+El parámetro **\*ruta** puede ser la ruta absoluta o relativa con respecto al directorio actual, de un archivo markdown o directorio que contenga un archivo o incluso más directorios con archivos con extencion válida ('.md', '.mkd', '.mdwn', '.mdown','.mdtxt', '.mdtext', '.markdown', '.text',). En el parámetro 
+**\*\*options** las opciones disponibles son ```--validate``` y ```--stats```, estas se pueden omitir o combinar para obtener distintos resultados (ver ejemplos).
 
-La libreria solo esta disponible para su importacion mediante módulos CommonJS, de la siguiente forma:
+La librería solo esta disponible para su importacion mediante módulos CommonJS, de la siguiente forma:
 ```js
 const mdlinks = require('md-links');
 ```
 ## Ejemplos
-Para estos ejemplos se usara el directorio `test_files` el cual tiene los siguientes archivos:
+Para estos ejemplos se usara el directorio `test_files`, el cual tiene los siguientes archivos:
 ```text
 ./
 ├── file1.text
@@ -35,10 +34,18 @@ Para estos ejemplos se usara el directorio `test_files` el cual tiene los siguie
 ├── dir1
     └── file4.md
 ```
+### Obteniendo todos los links encontrados en los archivos y directorios, dentro del directorio dado.
+Para obtener una lista de todos los links dentro de los archivos con extención válida dentro del  directorio `test_files` ejecuta la siguiente linea de código.
 ``` sh
 md-links 'test_files/'
 ```
+como resultado  se obtiene un arreglo de objetos que contienen las siguientes características de los links:
+- href: URL encontrada.
+- text: Texto que aparecía dentro del link.
+- file: Ruta absoluta del archivo en donde se encuentra el link.
+- line: Linea del texto en la que se encuentra el link.
 ```js
+
 *** LINKS FOUND ***
  [
   {
@@ -73,10 +80,15 @@ md-links 'test_files/'
   }
 ]
 ```
+### Comprobando el estado de todos los links encontrados en los archivos y directorios, dentro del directorio dado.
+Al correr la siguiente linea de código.
 
 ```sh
 md-links 'test_files/' --validate
 ```
+se consulta el estado de cada link encontrado, agregando las propiedades siguientes:
+- status : Código de respuesta HTTP.
+- ok : Mensaje 'FAIL' en caso de fallo u 'OK' en caso de éxito.
 ```js
 *** LINKS FOUND AND VALIDATED***
  [
@@ -122,6 +134,8 @@ md-links 'test_files/' --validate
   }
 ]
 ```
+### Estadísticas de los links.
+Si pasamos la opción --stats obtendremos un texto con estadísticas básicas sobre los links.
 ```sh
 md-links 'test_files/' --stats
 ```
@@ -131,6 +145,7 @@ md-links 'test_files/' --stats
  * Total: 5 
  * Unique: 4
 ```
+Finalmente si agregamos los dos valores, tendremos también el número de links rotos.
 ```sh
 md-links 'test_files/' --validat --stats
 ```
