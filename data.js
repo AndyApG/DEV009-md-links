@@ -10,7 +10,7 @@ function convertToAbsolutePath(pathReceived) {
     if (fs.existsSync(pathReceived)) {
       resolve(path.resolve(pathReceived));
     }
-    reject('No existe la ruta');
+    reject(Error('Path does no exist.'));
   });
 }
 
@@ -36,16 +36,18 @@ function readMarkdownFile(pathFile) {
 function getLinks(fileCont, pathFile) {
   const arrayLinks = new Array();
   const htmlFile = md.render(fileCont);
-  const doc = cheerio.load(`<html>${htmlFile}</html>`);
+  const doc = cheerio.load(`<html>${htmlFile}</html>`, { sourceCodeLocationInfo: true });
   const listItems = doc('html').find('a');
+
   listItems.map((i, el) => {
     arrayLinks.push({
       id: i,
       href: el.attribs.href,
-      text: el.children[0].data,
+      text: el.children[0].data.slice(0, 49),
       file: pathFile,
       status: 0,
       ok: '',
+      line: el.sourceCodeLocation.startLine,
     });
   });
   return arrayLinks.filter((i) => i.href.includes('http'));
