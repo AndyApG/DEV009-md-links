@@ -34,22 +34,20 @@ function readMarkdownFile(pathFile) {
 }
 
 function getLinks(fileCont, pathFile) {
-  const arrayLinks = new Array();
+  const arrayLinks = [];
   const htmlFile = md.render(fileCont);
   const doc = cheerio.load(`<html>${htmlFile}</html>`, { sourceCodeLocationInfo: true });
   const listItems = doc('html').find('a');
 
-  listItems.map((i, el) => {
-    arrayLinks.push({
-      id: i,
-      href: el.attribs.href,
-      text: el.children[0].data.slice(0, 49),
-      file: pathFile,
-      status: 0,
-      ok: '',
-      line: el.sourceCodeLocation.startLine,
-    });
-  });
+  listItems.map((i, el) => arrayLinks.push({
+    id: i,
+    href: el.attribs.href,
+    text: el.children[0].data.slice(0, 49),
+    file: pathFile,
+    status: 0,
+    ok: '',
+    line: el.sourceCodeLocation.startLine,
+  }));
   return arrayLinks.filter((i) => i.href.includes('http'));
 }
 
@@ -65,21 +63,23 @@ function validateLink(link) {
   });
 }
 
-const paths = Array();
+const paths = [];
 function readDirectory(dir) {
   const dirs = fs.readdirSync(dir, { encoding: 'utf8', withFileTypes: true });
   dirs.forEach((dirent) => {
     const pathFromDir = path.join(dirent.path, dirent.name);
-    promise = readExtFile(pathFromDir).then((res) => {
+    readExtFile(pathFromDir).then((res) => {
       if (res) {
         paths.push(pathFromDir);
       } else if (dirent.isDirectory()) {
         readDirectory(pathFromDir);
       }
       return paths;
-    }).then((result) => result);
+    });
   });
-  return promise;
+  return new Promise((resolve) => {
+    resolve(paths);
+  });
 }
 
 function verifyIsAnDirectory(dir) {
