@@ -20,11 +20,7 @@ function readExtFile(pathReceived) {
     '.mdtxt', '.mdtext', '.markdown', '.text',
   ];
   const fileName = path.basename(pathReceived);
-  return new Promise((resolve) => {
-    if (validExt.includes(path.extname(fileName))) {
-      resolve(true);
-    } else resolve(false);
-  });
+  return Promise.resolve(validExt.includes(path.extname(fileName)));
 }
 
 function readMarkdownFile(pathFile) {
@@ -64,6 +60,7 @@ function validateLink(link) {
 }
 
 const paths = [];
+let promise = Promise.resolve();
 function readDirectory(dir) {
   const dirs = fs.readdirSync(dir, { encoding: 'utf8', withFileTypes: true });
   dirs.forEach((dirent) => {
@@ -81,11 +78,7 @@ function readDirectory(dir) {
 }
 
 function verifyIsAnDirectory(dir) {
-  return new Promise((resolve) => {
-    if (fs.statSync(dir).isDirectory()) {
-      resolve(true);
-    } else resolve(false);
-  });
+  return Promise.resolve(fs.statSync(dir).isDirectory());
 }
 
 module.exports = {

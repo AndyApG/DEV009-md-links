@@ -6,30 +6,27 @@ const {
 // Crear la funcion mdLinks
 const mdLinks = (pathOrDir, validate = false) => new Promise((resolve, reject) => {
   convertToAbsolutePath(pathOrDir).then((absolutePath) => {
-    const absFilePath = absolutePath;
-    verifyIsAnDirectory(pathOrDir).then((result) => {
+    verifyIsAnDirectory(absolutePath).then((result) => {
       if (result === true) {
-        readDirectory(absolutePath).then((absolut) => {
-          const resultFiles = absolut.map((directoryPath) => new Promise((resolve) => {
-            resolve(mdLinks(directoryPath, validate));
-          }));
+        readDirectory(absolutePath).then((pathsFiles) => {
+          const resultFiles = pathsFiles.map((pathFile) => mdLinks(pathFile, validate));
           Promise.all(resultFiles).then((array) => resolve(array.flat()));
         });
       } else {
-        readExtFile(absolutePath).then((boolVal) => {
-          if (boolVal) {
-            readMarkdownFile(absFilePath)
+        readExtFile(absolutePath).then((isValid) => {
+          if (isValid === true) {
+            readMarkdownFile(absolutePath)
               .then((data) => getLinks(data, absolutePath))
-              .then((arrayLinks) => {
+              .then((links) => {
                 if (validate === false || validate === undefined) {
-                  arrayLinks.forEach((element) => {
+                  links.forEach((element) => {
                     delete element.status;
                     delete element.ok;
                     delete element.id;
                   });
-                  resolve(arrayLinks);
+                  resolve(links);
                 } else {
-                  const newArray = arrayLinks.map((element) => new Promise((resolve) => {
+                  const linksWhitStatus = links.map((element) => new Promise((resolve) => {
                     delete element.id;
                     validateLink(element.href)
                       .then((res) => {
@@ -43,7 +40,8 @@ const mdLinks = (pathOrDir, validate = false) => new Promise((resolve, reject) =
                         resolve(element);
                       });
                   }));
-                  Promise.all(newArray).then((results) => {
+
+                  Promise.all(linksWhitStatus).then((results) => {
                     resolve(results);
                   });
                 }
