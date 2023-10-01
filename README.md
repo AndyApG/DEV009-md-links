@@ -156,5 +156,8 @@ md-links 'test_files/' --validat --stats
  * Unique: 4 
  * Broken: 2
 ```
-
+### Errores
+Es posible que llegues a obtener algun error al ingresar alguna ruta a directorio o archivo, en caso de que no exista se muestra `Path does no exist.`, en caso de que el archivo no tenga extencion valida `File is not have an valid extention.`.
+## Diagrama de flujo
+![Diagrama](mdLinks.jpeg)
 
